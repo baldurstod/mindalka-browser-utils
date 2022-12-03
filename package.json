@@ -2,7 +2,7 @@
 	"name": "mindalka-browser-utils",
 	"version": "1.0.0",
 	"description": "",
-	"main": "dist/mindalka-browser-utils",
+	"main": "src/index.js",
 	"type": "module",
 	"devDependencies": {
 		"@rollup/plugin-node-resolve": "^13.3.0",
