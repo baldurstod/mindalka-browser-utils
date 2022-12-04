@@ -11,20 +11,6 @@ export default [
 		plugins: [
 			postcss({
 			}),
-		],
-		external: [
-			'mindalka-ui',
-		],
-	},
-	{
-		input: './src/index.js',
-		output: {
-			file: './dist/mindalka-browser-utils.browser.js',
-			format: 'esm'
-		},
-		plugins: [
-			postcss({
-			}),
 			nodeResolve(),
 		],
 	},

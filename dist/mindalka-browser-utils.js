@@ -1,5 +1,3 @@
-import { createElement, hide, show } from 'mindalka-ui';
-
 function SaveFile(file) {
 	var link = document.createElement('a');
 	link.setAttribute('href', URL.createObjectURL(file));
@@ -279,6 +277,95 @@ const NotificationManager = new (function () {
 	}
 	return NotificationManager;
 }());
+
+function createElement(tagName, options) {
+	let element = document.createElement(tagName);
+	if (options) {
+		for (let optionName in options) {
+			let optionValue = options[optionName];
+			switch (optionName) {
+				case 'class':
+					element.classList.add(...optionValue.split(' '));
+					break;
+				case 'i18n':
+					element.setAttribute('data-i18n', optionValue);
+					element.innerHTML = optionValue;
+					element.classList.add('i18n');
+					break;
+				case 'i18n-title':
+					element.setAttribute('data-i18n-title', optionValue);
+					element.classList.add('i18n-title');
+					break;
+				case 'i18n-placeholder':
+					element.setAttribute('data-i18n-placeholder', optionValue);
+					element.classList.add('i18n-placeholder');
+					break;
+				case 'i18n-label':
+					element.setAttribute('data-i18n-label', optionValue);
+					element.classList.add('i18n-label');
+					break;
+				case 'parent':
+					optionValue.append(element);
+					break;
+				case 'child':
+					element.append(optionValue);
+					break;
+				case 'childs':
+					element.append(...optionValue);
+					break;
+				case 'events':
+					for (let eventType in optionValue) {
+						let eventParams = optionValue[eventType];
+						if (typeof eventParams === 'function') {
+							element.addEventListener(eventType, eventParams);
+						} else {
+							element.addEventListener(eventType, eventParams.listener, eventParams.options);
+						}
+					}
+					break;
+				case 'hidden':
+					if (optionValue) {
+						hide(element);
+					}
+					break;
+				case 'attributes':
+					for (let attributeName in optionValue) {
+						element.setAttribute(attributeName, optionValue[attributeName]);
+					}
+					break;
+				case 'list':
+					element.setAttribute(optionName, optionValue);
+					break;
+				default:
+					if (optionName.startsWith('data-')) {
+						element.setAttribute(optionName, optionValue);
+					} else {
+						element[optionName] = optionValue;
+					}
+					break;
+			}
+		}
+	}
+	return element;
+}
+
+function display(htmlElement, visible) {
+	if (htmlElement == undefined) return;
+
+	if (visible) {
+		htmlElement.style.display = '';
+	} else {
+		htmlElement.style.display = 'none';
+	}
+}
+
+function show(htmlElement) {
+	display(htmlElement, true);
+}
+
+function hide(htmlElement) {
+	display(htmlElement, false);
+}
 
 var css_248z = "#options-manager-outer{\r\n\tposition: absolute;\r\n\twidth: 100%;\r\n\theight: 100%;\r\n\toverflow: auto;\r\n\tz-index: 10000;\r\n\tdisplay: flex;\r\n\talign-items: center;\r\n\tjustify-content: center;\r\n\ttop:0px;\r\n\tleft: 0px;\r\n}\r\n\r\n#options-manager-intermediate{\r\n\toverflow: visible;\r\n\twidth: 0px;\r\n\theight: 0px;\r\n\tposition: absolute;\r\n\tleft: 50%;\r\n\ttop: 50%;\r\n\tdisplay: flex;\r\n\talign-items: center;\r\n\tjustify-content: center;\r\n}\r\n\r\n#options-manager-inner{\r\n\tposition: relative;\r\n\t/*background-color: rgba(255, 255, 255, 1.0);*/\r\n\tbackground-color: var(--theme-popup-bg-color);\r\n\tcolor: var(--main-text-color-dark2);\r\n\tpadding:10px;\r\n\toverflow: hidden;\r\n\tmax-height: 70%;\r\n\tmax-width: 75%;\r\n\tdisplay: flex;\r\n\tflex-direction: column;\r\n\topacity: 0.9;\r\n}\r\n\r\n#options-manager-inner h1{\r\n\ttext-transform: capitalize;\r\n\ttext-align: center;\r\n}\r\n\r\n#options-manager-inner-filter{\r\n\twidth:100%;\r\n}\r\n\r\n.options-manager-button{\r\n\tcursor:pointer;\r\n\twhite-space: nowrap;\r\n\ttext-transform: capitalize;\r\n}\r\n\r\n#options-manager-inner table{\r\n\ttext-align: left;\r\n\toverflow: hidden auto;\r\n\tdisplay: block;\r\n\theight: 100%;\r\n}\r\n\r\n#options-manager-inner thead{\r\n\tposition: sticky;\r\n\t/*display: block;*/\r\n\ttop: 0px;\r\n\tbackground-color: var(--theme-popup-bg-color);\r\n}\r\n\r\n#options-manager-inner thead th{\r\n\tposition: sticky;\r\n\ttop: 0px;\r\n\tbackground-color: var(--theme-popup-bg-color);\r\n}\r\n\r\n#options-manager-inner th{\r\n\ttext-transform: capitalize;\r\n}\r\n\r\n#options-manager-inner th button, #options-manager-inner td button{\r\n\twidth: 100%;\r\n}\r\n\r\n#options-manager-title{\r\n\tcursor:move;\r\n}\r\n\r\n[draggable=true] {\r\n\tcursor: move;\r\n}\r\n\r\n[draggable=true] *{\r\n\tcursor: initial;\r\n}\r\n\r\n#options-manager-outer kbd{\r\n\tbackground-color: #eee;\r\n\tborder-radius: 0.25rem;\r\n\tborder: 0.1rem solid #b4b4b4;\r\n\tbox-shadow: 0 0.06rem 0.06rem rgba(0, 0, 0, .2), 0 0.1rem 0 0 rgba(255, 255, 255, .7) inset;\r\n\tcolor: #333;\r\n\tdisplay: inline-block;\r\n\tline-height: 1;\r\n\tpadding: 0.15rem;\r\n\twhite-space: nowrap;\r\n\tfont-weight: 1000;\r\n\tfont-size: 1.3rem;\r\n}\r\n";
 styleInject(css_248z);
