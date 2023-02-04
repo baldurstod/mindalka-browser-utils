@@ -537,6 +537,7 @@ export const OptionsManager = new (function () {
 							createElement('option', {innerHTML: o, parent: htmlElement});
 						}
 					}
+					htmlElement.value = value;
 					break;
 				case 'vec2':
 					htmlElement = createElement('input', {
