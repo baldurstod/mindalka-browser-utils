@@ -31,9 +31,8 @@ export const I18n = new (function () {
 
 		#initObserver() {
 			//const config = {attributes: true, childList: true, subtree: true, attributeFilter:['class', 'data-i18n', 'data-i18n-title', 'data-i18n-placeholder']};
-			const config = {childList: true, subtree: true};
+			const config = {childList: true, subtree: true, attributeFilter: ['i18n']};
 			const callback = async (mutationsList, observer) => {
-				let triggerI18n = false;
 				for(let mutation of mutationsList) {
 					if (mutation.type === 'childList') {
 						for (let node of mutation.addedNodes) {
@@ -41,6 +40,8 @@ export const I18n = new (function () {
 								this.updateElement(node);
 							}
 						}
+					} else if (mutation.type === 'attributes') {
+						this.updateElement(mutation.target);
 					}
 				}
 			};
