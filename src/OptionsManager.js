@@ -1,6 +1,6 @@
-import {createElement, hide, show} from 'mindalka-ui';
+import { createElement, hide, show } from 'harmony-ui';
 
-import {I18n} from './I18n.js';
+import { I18 } from './I18n.js';
 
 import './css/optionsmanager.css';
 

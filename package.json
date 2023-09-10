@@ -11,6 +11,6 @@
 		"rollup-watch": "^3.2.2"
 	},
 	"dependencies": {
-		"mindalka-ui": "github:baldurstod/mindalka-ui"
+		"harmony-ui": "github:baldurstod/harmony-ui"
 	}
 }
