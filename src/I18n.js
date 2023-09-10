@@ -122,7 +122,7 @@ export const I18n = new (function () {
 		formatString(s, values) {
 			let str = this.getString(s);
 
-			for (key in values) {
+			for (let key in values) {
 				str = str.replace(new RegExp("\\\${" + key + "\\}", "gi"), values[key]);
 			}
 			return str;
